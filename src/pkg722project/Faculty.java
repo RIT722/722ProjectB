@@ -1,5 +1,7 @@
 package pkg722project;
 
+import java.util.ArrayList;
+
 public class Faculty extends DBEntity {
 	private String fName;
 	private String lName;
@@ -11,98 +13,88 @@ public class Faculty extends DBEntity {
 		super();
 	}
 	
+	/**
+	 * @see pkg722project.DbEntity#DbEntity(java.lang.String)
+	 * This constructor calls super() then modifies the SQL statements to fit this class
+	 * @param _dbPwd 
+	 */
 	public Faculty(String _dbPwd) {
 		super(_dbPwd);
+		this.sqlFetch = String.format(this.sqlFetch,"fName,lName,password,email,askHelp","Faculty");
+		this.sqlPut = String.format(this.sqlPut,"Faculty","fName=?,lName=?,password=?,email=?,askHelp=?");
+		this.sqlPost = String.format(this.sqlPost,"Faculty","?,?,?,?,?,?");
+		this.sqlDelete = String.format(this.sqlDelete,"Faculty");
 	}
 
 	public Faculty(String _dbPwd, int _id) {
 		super(_dbPwd, _id);
 	}
 
-	/**
-	 * @return the fName
-	 */
 	public String getfName() {
 		return fName;
 	}
 
-	/**
-	 * @param fName the fName to set
-	 */
 	public void setfName(String fName) {
 		this.fName = fName;
 	}
 
-	/**
-	 * @return the lName
-	 */
 	public String getlName() {
 		return lName;
 	}
 
-	/**
-	 * @param lName the lName to set
-	 */
 	public void setlName(String lName) {
 		this.lName = lName;
 	}
 
-	/**
-	 * @return the password
-	 */
 	public String getPassword() {
 		return password;
 	}
 
-	/**
-	 * @param password the password to set
-	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
-	/**
-	 * @return the email
-	 */
 	public String getEmail() {
 		return email;
 	}
 
-	/**
-	 * @param email the email to set
-	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	/**
-	 * @return the askHelp
-	 */
 	public boolean wantsHelp() {
 		return askHelp;
 	}
 
-	/**
-	 * @param askHelp the askHelp to set
-	 */
 	public void setAskHelp(boolean askHelp) {
 		this.askHelp = askHelp;
 	}
-
-	public void fetch() {
-		super.fetch();
-		//more code
+	
+	/**
+	 * @see pkg722project.DbEntity#assignFields(java.util.ArrayList)
+	 * @param rs 
+	 */
+	@Override
+	protected void assignFields(ArrayList<ArrayList<String>> rs) {
+		this.fName = (rs.get(1)).get(1);
+		this.lName = (rs.get(2)).get(2);
+		this.password = (rs.get(3)).get(3);
+		this.email = (rs.get(4)).get(4);
+		this.askHelp = Boolean.parseBoolean((rs.get(5)).get(5));
 	}
 	
-	public void put() {
-		super.put();
-	}
-			
-	public void post() {
-		super.post();
-	}
-			
-	public void delete() {
-		super.delete();
+	/**
+	 * @see pkg722project.DbEntity#getMemberFields()
+	 * @return 
+	 */
+	@Override
+	protected ArrayList<String> getMemberFields(){
+		ArrayList<String> fields = new ArrayList();
+		fields.add(this.fName);
+		fields.add(this.lName);
+		fields.add(this.password);
+		fields.add(this.email);
+		fields.add(Boolean.toString(this.askHelp));
+		return fields;
 	}
 }
