@@ -70,7 +70,7 @@ public abstract class DBEntity {
 	}
 
 	/**
-	 * Sends an SQL statement to the database to object the fields that this object's id corresponds to.
+	 * Sends an SQL statement to the database to updater the fields that this object's id corresponds to.
 	 * @throws DLException
 	 */
 	public void put() throws DLException {

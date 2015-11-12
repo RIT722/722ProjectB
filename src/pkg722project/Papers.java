@@ -108,21 +108,6 @@ public class Papers extends DBEntity {
 	}
 
 	/**
-	 * Deletes a radio-button-selected paper from the papers table
-	 * @throws DLException 
-	 */
-	public void deletePaper() throws DLException {
-		MySQLDatabase db = MySQLDatabase.getInstance();
-		try {
-			ArrayList values = new ArrayList();
-			values.add(this.id);
-			db.setData("DELETE FROM papers WHERE id = ?;", values);
-		} catch (RuntimeException e) {
-			throw new DLException(e, "Unix time: " + String.valueOf(System.currentTimeMillis() / 1000), "Error in deletePaper() of Papers");
-		}
-	}
-
-	/**
 	 * Updates the papers table to reflect updated details for a paper. Updates keywords in paper_keywords.
 	 * @param title
 	 * @param pAbstract

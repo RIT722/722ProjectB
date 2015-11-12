@@ -3,6 +3,7 @@ package pkg722project;
 import java.util.ArrayList;
 
 public class Faculty extends DBEntity {
+
 	private String fName;
 	private String lName;
 	private String password;
@@ -12,18 +13,18 @@ public class Faculty extends DBEntity {
 	public Faculty() {
 		super();
 	}
-	
+
 	/**
-	 * @see pkg722project.DbEntity#DbEntity(java.lang.String)
-	 * This constructor calls super() then modifies the SQL statements to fit this class
-	 * @param _dbPwd 
+	 * @see pkg722project.DbEntity#DbEntity(java.lang.String) This constructor
+	 * calls super() then modifies the SQL statements to fit this class
+	 * @param _dbPwd
 	 */
 	public Faculty(String _dbPwd) {
 		super(_dbPwd);
-		this.sqlFetch = String.format(this.sqlFetch,"fName,lName,password,email,askHelp","Faculty");
-		this.sqlPut = String.format(this.sqlPut,"Faculty","fName=?,lName=?,password=?,email=?,askHelp=?");
-		this.sqlPost = String.format(this.sqlPost,"Faculty","?,?,?,?,?,?");
-		this.sqlDelete = String.format(this.sqlDelete,"Faculty");
+		this.sqlFetch = String.format(this.sqlFetch, "fName,lName,password,email,askHelp", "Faculty");
+		this.sqlPut = String.format(this.sqlPut, "Faculty", "fName=?,lName=?,password=?,email=?,askHelp=?");
+		this.sqlPost = String.format(this.sqlPost, "Faculty", "?,?,?,?,?,?");
+		this.sqlDelete = String.format(this.sqlDelete, "Faculty");
 	}
 
 	public Faculty(String _dbPwd, int _id) {
@@ -69,10 +70,10 @@ public class Faculty extends DBEntity {
 	public void setAskHelp(boolean askHelp) {
 		this.askHelp = askHelp;
 	}
-	
+
 	/**
 	 * @see pkg722project.DbEntity#assignFields(java.util.ArrayList)
-	 * @param rs 
+	 * @param rs
 	 */
 	@Override
 	protected void assignFields(ArrayList<ArrayList<String>> rs) {
@@ -82,13 +83,13 @@ public class Faculty extends DBEntity {
 		this.email = (rs.get(4)).get(4);
 		this.askHelp = Boolean.parseBoolean((rs.get(5)).get(5));
 	}
-	
+
 	/**
 	 * @see pkg722project.DbEntity#getMemberFields()
-	 * @return 
+	 * @return
 	 */
 	@Override
-	protected ArrayList<String> getMemberFields(){
+	protected ArrayList<String> getMemberFields() {
 		ArrayList<String> fields = new ArrayList();
 		fields.add(this.fName);
 		fields.add(this.lName);

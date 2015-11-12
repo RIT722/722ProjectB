@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class PaperKeywords extends DBEntity {
 
-	private String keyword;
+	private ArrayList<String> keywords;
 	
 	public PaperKeywords() {
 	}
@@ -26,12 +26,12 @@ public class PaperKeywords extends DBEntity {
 		super(_dbPwd, _id);
 	}
 
-	public String getKeyword() {
-		return keyword;
+	public ArrayList<String> getKeywords() {
+		return keywords;
 	}
 
-	public void setKeyword(String keyword) {
-		this.keyword = keyword;
+	public void addKeyword(String keyword) {
+		this.keywords.add(keyword);
 	}
 	
 	/**
@@ -40,7 +40,9 @@ public class PaperKeywords extends DBEntity {
 	 */
 	@Override
 	protected void assignFields(ArrayList<ArrayList<String>> rs) {
-		this.keyword = (rs.get(1)).get(1);
+		for (String kw : rs.get(1)) {
+			this.keywords.add(kw);
+		}
 	}
 	
 	/**
