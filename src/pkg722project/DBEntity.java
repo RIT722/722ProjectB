@@ -18,20 +18,16 @@ public abstract class DBEntity {
 	/**
 	 * Default empty constructor
 	 */
-	public DBEntity() {
+	protected DBEntity() {
 	}
 	
 	/**
 	 * Constructor that initializes the database for this object but does not otherwise define it.
 	 * @param _dbPwd
 	 */
-	public DBEntity(String _dbPwd) {
+	protected DBEntity(String _dbPwd) {
 		this();
 		this.dbPwd = _dbPwd;
-		this.sqlFetch = "SELECT %1 FROM %2 WHERE id = ?";
-		this.sqlPut = "UPDATE %1 SET %2 WHERE id = ?;";
-		this.sqlPost = "INSERT INTO %1 VALUES(%2);";
-		this.sqlDelete = "DELETE FROM %1 WHERE id = ?;";
 	}
 	
 	/**
@@ -39,16 +35,16 @@ public abstract class DBEntity {
 	 * @param _dbPwd
 	 * @param _id
 	 */
-	public DBEntity(String _dbPwd, int _id) {
+	protected DBEntity(String _dbPwd, int _id) {
 		this(_dbPwd);
 		this.id = _id;
 	}
 
-	public int getId() {
+	protected int getId() {
 		return this.id;
 	}
 
-	public void setId(int newId) {
+	protected void setId(int newId) {
 		this.id = newId;
 	}
 	
@@ -56,7 +52,7 @@ public abstract class DBEntity {
 	 * Retrieves the data field values that this object's id correspond to in the database.
 	 * @throws DLException
 	 */
-	public void fetch() throws DLException {
+	protected void fetch() throws DLException {
 		MySQLDatabase db = MySQLDatabase.getInstance();
         ArrayList<String> idParam = new ArrayList();
         idParam.add(Integer.toString(this.id));
@@ -73,7 +69,7 @@ public abstract class DBEntity {
 	 * Sends an SQL statement to the database to updater the fields that this object's id corresponds to.
 	 * @throws DLException
 	 */
-	public void put() throws DLException {
+	protected void put() throws DLException {
 		MySQLDatabase db = MySQLDatabase.getInstance();        
         try{
             ArrayList<String> values = this.getMemberFields();
@@ -88,7 +84,7 @@ public abstract class DBEntity {
 	 * Sends an SQL statement to the database to insert this object's values into the database.
 	 * @throws DLException
 	 */
-	public void post() throws DLException {
+	protected void post() throws DLException {
 		MySQLDatabase db = MySQLDatabase.getInstance();        
         try{
             ArrayList<String> values = this.getMemberFields();
@@ -103,7 +99,7 @@ public abstract class DBEntity {
 	 * Sends an SQL statement to the database to delete the entry this object corresponds to from the database.
 	 * @throws DLException
 	 */
-	public void delete() throws DLException {
+	protected void delete() throws DLException {
 		MySQLDatabase db = MySQLDatabase.getInstance();        
         try{   
             ArrayList<String> idParam = new ArrayList();

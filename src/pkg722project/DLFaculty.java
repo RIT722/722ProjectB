@@ -2,15 +2,16 @@ package pkg722project;
 
 import java.util.ArrayList;
 
-public class Faculty extends DBEntity {
+public class DLFaculty extends DBEntity {
 
 	private String fName;
 	private String lName;
 	private String password;
 	private String email;
 	private boolean askHelp;
+	private String sqlPostStudent;
 
-	public Faculty() {
+	public DLFaculty() {
 		super();
 	}
 
@@ -19,15 +20,16 @@ public class Faculty extends DBEntity {
 	 * calls super() then modifies the SQL statements to fit this class
 	 * @param _dbPwd
 	 */
-	public Faculty(String _dbPwd) {
+	public DLFaculty(String _dbPwd) {
 		super(_dbPwd);
-		this.sqlFetch = String.format(this.sqlFetch, "fName,lName,password,email,askHelp", "Faculty");
-		this.sqlPut = String.format(this.sqlPut, "Faculty", "fName=?,lName=?,password=?,email=?,askHelp=?");
-		this.sqlPost = String.format(this.sqlPost, "Faculty", "?,?,?,?,?,?");
-		this.sqlDelete = String.format(this.sqlDelete, "Faculty");
+		this.sqlFetch = "SELECT fName,lName,password,email,askHelp FROM Faculty WHERE id=?";
+		this.sqlPut = "UPDATE Faculty SET fName=?,lName=?,password=?,email=?,askHelp=? WHERE id=?";
+		this.sqlPost = "INSERT INTO Faculty VALUES (?,?,?,?,?,?)";
+		this.sqlDelete = "DELETE FROM Faculty WHERE id=?";
+		this.sqlPostStudent = "INSERT INTO Student VALUES (?,?)";
 	}
 
-	public Faculty(String _dbPwd, int _id) {
+	public DLFaculty(String _dbPwd, int _id) {
 		super(_dbPwd, _id);
 	}
 
@@ -71,6 +73,19 @@ public class Faculty extends DBEntity {
 		this.askHelp = askHelp;
 	}
 
+	public void postStudent(String studentName) throws DLException {
+		MySQLDatabase db = MySQLDatabase.getInstance();        
+        try{
+            ArrayList<String> values = new ArrayList<>();
+			values.add(studentName);
+			values.add(Integer.toString(this.id));
+            db.setData(this.sqlPostStudent, values);
+        }
+        catch(RuntimeException e){
+            throw new DLException(e, "Unix time: " + String.valueOf(System.currentTimeMillis()/1000), "Error in post() of Equipment");
+        }
+	}
+	
 	/**
 	 * @see pkg722project.DbEntity#assignFields(java.util.ArrayList)
 	 * @param rs

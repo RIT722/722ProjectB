@@ -2,13 +2,13 @@ package pkg722project;
 
 import java.util.ArrayList;
 
-public class Papers extends DBEntity {
+public class DLPapers extends DBEntity {
 
 	private String title;
 	private String pAbstract;
 	private String citation;
 
-	public Papers() {
+	public DLPapers() {
 	}
 
 	/**
@@ -16,15 +16,15 @@ public class Papers extends DBEntity {
 	 * This constructor calls super() then modifies the SQL statements to fit this class
 	 * @param _dbPwd 
 	 */
-	public Papers(String _dbPwd) {
+	public DLPapers(String _dbPwd) {
 		super(_dbPwd);
-		this.sqlFetch = String.format(this.sqlFetch, "title,abstract,citation", "Papers");
-		this.sqlPut = String.format(this.sqlPut, "Papers", "title=?,abstract=?,citation=?");
-		this.sqlPost = String.format(this.sqlPost, "Papers", "?,?,?");
-		this.sqlDelete = String.format(this.sqlDelete, "Papers");
+		this.sqlFetch = "SELECT title,abstract,citation FROM Papers WHERE id=?";
+		this.sqlPut = "UPDATE Papers SET title=?,abstract=?,citation=? WHERE id=?";
+		this.sqlPost = "INSERT INTO Papers VALUES (?,?,?)";
+		this.sqlDelete = "DELETE FROM Papers WHERE id=?";
 	}
 
-	public Papers(String _dbPwd, int _id) {
+	public DLPapers(String _dbPwd, int _id) {
 		super(_dbPwd, _id);
 	}
 
@@ -76,6 +76,10 @@ public class Papers extends DBEntity {
 		return fields;
 	}
 
+	//returns the list of titles a faculty member has published
+	public static ArrayList<ArrayList<String>> fetchPaperList(int facId) throws DLException {
+	}
+	
 	/**
 	 * Loads details of radio-button-selected paper into the user interface to allow editing
 	 * @return ArrayList<String> list of fields describing the paper to be edited

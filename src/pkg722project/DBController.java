@@ -22,18 +22,17 @@ public final class DBController {
 	}
 
 	//Inserts a student into the student table using a faculty object
-	public static void addStudent(String pwd, Faculty fac, String studentName) throws DLException {
-		Student newStudent = new Student(pwd);
-		newStudent.setName(studentName);
-		newStudent.setFacultyId(fac.getId());
+	public static void addStudent(int facId, String studentName) throws DLException {
+		DLFaculty f = new DLFaculty("12345",facId);
 		try {
-			newStudent.post();
-		} catch (RuntimeException e) {
-			throw new DLException(e, "Unix time: " + String.valueOf(System.currentTimeMillis() / 1000), "Error in addStudent() of Faculty");
+			f.fetch();
+			f.postStudent(studentName);
+		} catch (DLException e) {
+			throw e;
 		}
 	}
 
-	//Used in Faculty search screen to display list of student employees
+	//Used in DLFaculty search screen to display list of student employees
 	public static ArrayList<String> getStudents(int facId) throws DLException {
 		ArrayList<String> studentList = new ArrayList();
 
